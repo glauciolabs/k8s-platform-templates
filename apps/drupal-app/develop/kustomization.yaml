@@ -7,3 +7,5 @@ images:
   - name: image-name
     newName: glauciolabs/drupal-app
     newTag: latest
+patches:
+  - path: patch-node-selector.yaml
