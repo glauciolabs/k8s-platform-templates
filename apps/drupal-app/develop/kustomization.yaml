@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../../../bases/web-app
+namespace: drupal-app
+images:
+  - name: image-name
+    newName: glauciolabs/drupal-app
+    newTag: latest

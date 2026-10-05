@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: drupal-app-develop
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:glauciolabs/k8s-platform-templates.git
+    targetRevision: develop
+    path: apps/drupal-app/develop
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: drupal-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
