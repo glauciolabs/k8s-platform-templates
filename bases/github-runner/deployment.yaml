@@ -33,6 +33,9 @@ spec:
       - name: github-runner-dev
         image: ghcr.io/glauciolabs/github-runner:v0.1.0-dev
         imagePullPolicy: IfNotPresent
+        envFrom:
+        - secretRef:
+            name: github-runner-secrets-dev
         env:
         - name: GITHUB_URL
           valueFrom:
