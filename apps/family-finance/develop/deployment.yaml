@@ -27,7 +27,50 @@ spec:
         - name: PORT
           value: "4001"
         - name: INTERNAL_SERVICE_API_KEY
-          value: "family-finance-internal-secret-token"
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: INTERNAL_SERVICE_API_KEY
+        - name: CLOUDFLARE_ACCOUNT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_ACCOUNT_ID
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: GEMINI_API_KEY
+        - name: MSAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_ID
+        - name: CLOUDFLARE_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_API_TOKEN
+        - name: CLOUDFLARE_D1_DATABASE_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_D1_DATABASE_ID
+        - name: MSAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_SECRET
+        - name: MSAL_REDIRECT_URI
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_REDIRECT_URI
+        - name: MSAL_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_TENANT_ID
         resources:
           requests:
             cpu: 50m
@@ -79,7 +122,50 @@ spec:
         - name: CORE_API_URL
           value: "http://finance-core-api:4001"
         - name: INTERNAL_SERVICE_API_KEY
-          value: "family-finance-internal-secret-token"
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: INTERNAL_SERVICE_API_KEY
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: GEMINI_API_KEY
+        - name: MSAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_ID
+        - name: CLOUDFLARE_ACCOUNT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_ACCOUNT_ID
+        - name: CLOUDFLARE_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_API_TOKEN
+        - name: CLOUDFLARE_D1_DATABASE_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_D1_DATABASE_ID
+        - name: MSAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_SECRET
+        - name: MSAL_REDIRECT_URI
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_REDIRECT_URI
+        - name: MSAL_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_TENANT_ID
         resources:
           requests:
             cpu: 50m
@@ -131,7 +217,50 @@ spec:
         - name: MAX_MONTHLY_TOKENS
           value: "500000"
         - name: GEMINI_API_KEY
-          value: "PLACEHOLDER_KEY"
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: GEMINI_API_KEY
+        - name: CLOUDFLARE_ACCOUNT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_ACCOUNT_ID
+        - name: INTERNAL_SERVICE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: INTERNAL_SERVICE_API_KEY
+        - name: MSAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_ID
+        - name: MSAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_SECRET
+        - name: MSAL_REDIRECT_URI
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_REDIRECT_URI
+        - name: MSAL_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_TENANT_ID
+        - name: CLOUDFLARE_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_API_TOKEN
+        - name: CLOUDFLARE_D1_DATABASE_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_D1_DATABASE_ID
         resources:
           requests:
             cpu: 50m
@@ -187,7 +316,70 @@ spec:
         - name: AI_ADVISOR_URL
           value: "http://finance-ai-advisor:4003"
         - name: INTERNAL_SERVICE_API_KEY
-          value: "family-finance-internal-secret-token"
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: INTERNAL_SERVICE_API_KEY
+        - name: CLOUDFLARE_ACCOUNT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_ACCOUNT_ID
+        - name: CLOUDFLARE_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_API_TOKEN
+        - name: CLOUDFLARE_D1_DATABASE_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: CLOUDFLARE_D1_DATABASE_ID
+        - name: GEMINI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: GEMINI_API_KEY
+        - name: MSAL_REDIRECT_URI
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_REDIRECT_URI
+        - name: MSAL_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_TENANT_ID
+        - name: MSAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_ID
+        - name: MSAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_SECRET
+        - name: ALLOWED_FAMILY_EMAILS
+          valueFrom:
+            configMapKeyRef:
+              name: family-finance-config
+              key: ALLOWED_FAMILY_EMAILS
+        - name: GEMINI_MODEL
+          valueFrom:
+            configMapKeyRef:
+              name: family-finance-config
+              key: GEMINI_MODEL
+        - name: MAX_MONTHLY_TOKENS
+          valueFrom:
+            configMapKeyRef:
+              name: family-finance-config
+              key: MAX_MONTHLY_TOKENS
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: family-finance-config
+              key: NODE_ENV
         resources:
           requests:
             cpu: 50m
@@ -215,7 +407,8 @@ metadata:
   namespace: family-finance
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-cloudflare
-    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    external-dns.alpha.kubernetes.io/target: "5bf6bf0d-fe5a-40fc-adf1-887f866992e3.cfargotunnel.com"
 spec:
   ingressClassName: traefik
   rules:
@@ -233,4 +426,3 @@ spec:
   - hosts:
     - finance.glauciolabs.work
     secretName: finance-bff-tls
-
