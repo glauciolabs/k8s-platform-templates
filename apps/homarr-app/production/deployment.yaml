@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homarr
+  namespace: homarr-app
+  labels:
+    app: homarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homarr
+  template:
+    metadata:
+      labels:
+        app: homarr
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - gww-1
+                      - gww-2
+      containers:
+        - name: homarr
+          image: ghcr.io/ajnart/homarr:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7575
+              name: http
+          env:
+            - name: PORT
+              value: "7575"
+            - name: DATABASE_URL
+              value: "file:/app/data/db.sqlite"
+            - name: AUTH_PROVIDER
+              value: "oidc"
+            - name: AUTH_PROVIDERS
+              value: "oidc"
+            - name: AUTH_OIDC_AUTO_LOGIN
+              value: "true"
+            - name: AUTH_OIDC_CLIENT_NAME
+              value: "Microsoft Entra ID"
+            - name: AUTH_OIDC_SCOPE_OVERWRITE
+              value: "openid profile email"
+            - name: AUTH_OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: homarr-sso-secrets
+                  key: AUTH_OIDC_CLIENT_ID
+            - name: AUTH_OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: homarr-sso-secrets
+                  key: AUTH_OIDC_CLIENT_SECRET
+            - name: AUTH_OIDC_URI
+              valueFrom:
+                secretKeyRef:
+                  name: homarr-sso-secrets
+                  key: AUTH_OIDC_ISSUER
+            - name: AUTH_OIDC_ISSUER
+              valueFrom:
+                secretKeyRef:
+                  name: homarr-sso-secrets
+                  key: AUTH_OIDC_ISSUER
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          volumeMounts:
+            - mountPath: /app/data
+              name: homarr-ocfs-data
+            - mountPath: /data
+              name: homarr-ocfs-data-compat
+            - mountPath: /app/data/configs
+              name: homarr-ocfs-configs
+            - mountPath: /app/public/icons
+              name: homarr-ocfs-icons
+      volumes:
+        - name: homarr-ocfs-data
+          hostPath:
+            path: /data/homarr-app/data
+            type: DirectoryOrCreate
+        - name: homarr-ocfs-data-compat
+          hostPath:
+            path: /data/homarr-app/data
+            type: DirectoryOrCreate
+        - name: homarr-ocfs-configs
+          hostPath:
+            path: /data/homarr-app/configs
+            type: DirectoryOrCreate
+        - name: homarr-ocfs-icons
+          hostPath:
+            path: /data/homarr-app/icons
+            type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: homarr
+  namespace: homarr-app
+  labels:
+    app: homarr
+spec:
+  type: ClusterIP
+  ports:
+    - port: 7575
+      targetPort: 7575
+      protocol: TCP
+      name: http
+  selector:
+    app: homarr
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: homarr
+  namespace: homarr-app
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-cloudflare
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.kubernetes.io/cloudflare-proxied: "false"
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: homarr.glauciolabs.work
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: homarr
+                port:
+                  number: 7575
+  tls:
+    - hosts:
+        - homarr.glauciolabs.work
+      secretName: homarr-tls
