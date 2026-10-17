@@ -1,0 +1,232 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-core-api
+  namespace: family-finance
+  labels:
+    app: finance-core-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finance-core-api
+  template:
+    metadata:
+      labels:
+        app: finance-core-api
+    spec:
+      imagePullSecrets:
+      - name: ghcr-secret
+      containers:
+      - name: core-api
+        image: ghcr.io/glauciocampos/finance-core-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4001
+        env:
+        - name: PORT
+          value: "4001"
+        - name: INTERNAL_SERVICE_API_KEY
+          value: "family-finance-internal-secret-token"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: finance-core-api
+  namespace: family-finance
+spec:
+  selector:
+    app: finance-core-api
+  ports:
+  - port: 4001
+    targetPort: 4001
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-ingestor
+  namespace: family-finance
+  labels:
+    app: finance-ingestor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finance-ingestor
+  template:
+    metadata:
+      labels:
+        app: finance-ingestor
+    spec:
+      imagePullSecrets:
+      - name: ghcr-secret
+      containers:
+      - name: ingestor
+        image: ghcr.io/glauciocampos/finance-ingestor:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4002
+        env:
+        - name: PORT
+          value: "4002"
+        - name: CORE_API_URL
+          value: "http://finance-core-api:4001"
+        - name: INTERNAL_SERVICE_API_KEY
+          value: "family-finance-internal-secret-token"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: finance-ingestor
+  namespace: family-finance
+spec:
+  selector:
+    app: finance-ingestor
+  ports:
+  - port: 4002
+    targetPort: 4002
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-ai-advisor
+  namespace: family-finance
+  labels:
+    app: finance-ai-advisor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finance-ai-advisor
+  template:
+    metadata:
+      labels:
+        app: finance-ai-advisor
+    spec:
+      imagePullSecrets:
+      - name: ghcr-secret
+      containers:
+      - name: ai-advisor
+        image: ghcr.io/glauciocampos/finance-ai-advisor:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4003
+        env:
+        - name: PORT
+          value: "4003"
+        - name: MAX_MONTHLY_TOKENS
+          value: "500000"
+        - name: GEMINI_API_KEY
+          value: "PLACEHOLDER_KEY"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: finance-ai-advisor
+  namespace: family-finance
+spec:
+  selector:
+    app: finance-ai-advisor
+  ports:
+  - port: 4003
+    targetPort: 4003
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-bff
+  namespace: family-finance
+  labels:
+    app: finance-bff
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finance-bff
+  template:
+    metadata:
+      labels:
+        app: finance-bff
+    spec:
+      imagePullSecrets:
+      - name: ghcr-secret
+      containers:
+      - name: bff
+        image: ghcr.io/glauciocampos/finance-bff:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4000
+        env:
+        - name: PORT
+          value: "4000"
+        - name: CORE_API_URL
+          value: "http://finance-core-api:4001"
+        - name: INGESTOR_URL
+          value: "http://finance-ingestor:4002"
+        - name: AI_ADVISOR_URL
+          value: "http://finance-ai-advisor:4003"
+        - name: INTERNAL_SERVICE_API_KEY
+          value: "family-finance-internal-secret-token"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
+          limits:
+            cpu: 300m
+            memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: finance-bff
+  namespace: family-finance
+spec:
+  selector:
+    app: finance-bff
+  ports:
+  - port: 80
+    targetPort: 4000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: finance-bff
+  namespace: family-finance
+  annotations:
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+    external-dns.alpha.kubernetes.io/target: 5bf6bf0d-fe5a-40fc-adf1-887f866992e3.cfargotunnel.com
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: finance.glauciolabs.work
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: finance-bff
+            port:
+              number: 80
+
