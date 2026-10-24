@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: app }
+spec:
+  template:
+    spec:
+      nodeSelector: { environment: develop }
+      imagePullSecrets: [{ name: ghcr-secret }]
+      containers:
+        - name: app
+          ports: [{ name: http, containerPort: 4001 }]
+          env:
+            - name: PORT
+              value: "4001"
