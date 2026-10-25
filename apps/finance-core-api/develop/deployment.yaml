@@ -13,16 +13,37 @@ spec:
             - name: PORT
               value: "4001"
             - name: CLOUDFLARE_ACCOUNT_ID
-              valueFrom: { secretKeyRef: { name: family-finance-secrets, key: CLOUDFLARE_ACCOUNT_ID } }
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: CLOUDFLARE_ACCOUNT_ID
             - name: CLOUDFLARE_D1_DATABASE_ID
-              valueFrom: { secretKeyRef: { name: family-finance-secrets, key: CLOUDFLARE_D1_DATABASE_ID } }
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: CLOUDFLARE_D1_DATABASE_ID
             - name: CLOUDFLARE_API_TOKEN
-              valueFrom: { secretKeyRef: { name: family-finance-secrets, key: CLOUDFLARE_API_TOKEN } }
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: CLOUDFLARE_API_TOKEN
             - name: INTERNAL_SERVICE_API_KEY
-              valueFrom: { secretKeyRef: { name: family-finance-secrets, key: INTERNAL_SERVICE_API_KEY } }
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: INTERNAL_SERVICE_API_KEY
             - name: MSAL_CLIENT_ID
-              valueFrom: { secretKeyRef: { name: family-finance-secrets, key: MSAL_CLIENT_ID } }
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: MSAL_CLIENT_ID
             - name: MSAL_CLIENT_SECRET
-              valueFrom: { secretKeyRef: { name: family-finance-secrets, key: MSAL_CLIENT_SECRET } }
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: MSAL_CLIENT_SECRET
             - name: MSAL_TENANT_ID
-              valueFrom: { secretKeyRef: { name: family-finance-secrets, key: MSAL_TENANT_ID } }
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: MSAL_TENANT_ID
