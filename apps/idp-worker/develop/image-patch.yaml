@@ -1,10 +1,1 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: app
-spec:
-  template:
-    spec:
-      containers:
-        - name: app
-          image: ghcr.io/glauciolabs/idp-worker@sha256:replace-with-approved-digest
+apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: app\nspec:\n  template:\n    spec:\n      containers:\n        - name: app\n          image: ghcr.io/glauciolabs/idp-worker@sha256:4be7dcc84a9a174255a268d7fb88ff0720bec063877a3414ccb444d04f141d60\n
