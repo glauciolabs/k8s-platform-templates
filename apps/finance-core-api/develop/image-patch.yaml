@@ -1,10 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata:
-  name: app
+metadata: { name: app }
 spec:
   template:
     spec:
       containers:
         - name: app
-          image: ghcr.io/glauciolabs/finance-core-api@sha256:replace-with-approved-digest
+          image: ghcr.io/glauciolabs/finance-core-api@sha256:0b1f16194776443e8efd0d12ee7a2a93b16e0e46a0659c42976e7123d80bb50f
