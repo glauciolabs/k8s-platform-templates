@@ -14,6 +14,14 @@ spec:
           ports:
             - name: http
               containerPort: 4001
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
           env:
             - name: PORT
               value: "4001"
