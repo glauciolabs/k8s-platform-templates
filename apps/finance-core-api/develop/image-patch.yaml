@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
-metadata: { name: app }
+metadata:
+  name: app
 spec:
   template:
     spec:

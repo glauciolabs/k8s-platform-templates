@@ -22,12 +22,22 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             allowPrivilegeEscalation: false
-            capabilities: { drop: [ALL] }
+            capabilities:
+              drop:
+                - ALL
             readOnlyRootFilesystem: true
             runAsNonRoot: true
-          ports: [{ name: http, containerPort: 8080 }]
-          readinessProbe: { httpGet: { path: /healthz, port: http } }
-          livenessProbe: { httpGet: { path: /healthz, port: http } }
+          ports:
+            - name: http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
           resources:
             requests: { cpu: 50m, memory: 64Mi }
             limits: { cpu: 500m, memory: 512Mi }
