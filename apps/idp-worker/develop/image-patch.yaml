@@ -7,4 +7,4 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/glauciolabs/idp-worker@sha256:4be7dcc84a9a174255a268d7fb88ff0720bec063877a3414ccb444d04f141d60
+          image: ghcr.io/glauciolabs/idp-worker@sha256:ff30338fb546645f0d49d11705d5b07cdc4433b2ec41d92d7299ebf83cb44e07
