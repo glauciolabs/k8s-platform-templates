@@ -3,6 +3,7 @@ kind: Kustomization
 
 resources:
   - ../../../bases/service-v1
+  - ../../../bases/idp-kubernetes-reader
 
 namespace: idp
 namePrefix: idp-worker-
