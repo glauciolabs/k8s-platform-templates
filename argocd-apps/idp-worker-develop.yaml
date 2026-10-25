@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: idp-worker-develop
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/glauciolabs/k8s-platform-templates.git
+    targetRevision: master
+    path: apps/idp-worker/develop
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: idp
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
