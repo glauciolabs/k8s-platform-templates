@@ -22,3 +22,16 @@ patches:
       - op: replace
         path: /spec/template/spec/volumes/1/hostPath/path
         value: /dados/drupal-app-develop/drupal-files
+  - target:
+      kind: Ingress
+      name: drupal
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: blog.develop.glauciolabs.work
+      - op: replace
+        path: /spec/tls/0/hosts/0
+        value: blog.develop.glauciolabs.work
+      - op: replace
+        path: /metadata/annotations/traefik.ingress.kubernetes.io~1router.middlewares
+        value: drupal-app-develop-redirect-to-https@kubernetescrd

@@ -4,8 +4,28 @@ kind: Kustomization
 resources:
   - ../base
 
-# Using official Drupal image
-images:
-  - name: drupal
-    newName: drupal
-    newTag: 10-apache
+namespace: drupal-app-production
+
+patches:
+  - path: image-patch.yaml
+  - target:
+      kind: Deployment
+      name: drupal-mysql
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/volumes/0/hostPath/path
+        value: /databases/drupal-app-production/drupal-mysql
+  - target:
+      kind: Deployment
+      name: drupal
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/volumes/1/hostPath/path
+        value: /dados/drupal-app-production/drupal-files
+  - target:
+      kind: Ingress
+      name: drupal
+    patch: |-
+      - op: replace
+        path: /metadata/annotations/traefik.ingress.kubernetes.io~1router.middlewares
+        value: drupal-app-production-redirect-to-https@kubernetescrd

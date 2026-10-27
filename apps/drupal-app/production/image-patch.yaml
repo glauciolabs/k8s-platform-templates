@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: drupal
+spec:
+  template:
+    spec:
+      containers:
+        - name: drupal
+          image: ghcr.io/glauciolabs/drupal-app@sha256:eabba719ae54151b843e6c46bbbcebca9cf947c52c7815ac67190cf821bfec6b
+
