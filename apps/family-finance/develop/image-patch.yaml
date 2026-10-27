@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-core-api
+  namespace: family-finance
+spec:
+  template:
+    spec:
+      containers:
+        - name: core-api
+          image: ghcr.io/glauciocampos/finance-core-api:latest
+
