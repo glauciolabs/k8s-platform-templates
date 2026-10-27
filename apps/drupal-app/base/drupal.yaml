@@ -24,9 +24,31 @@ spec:
                 values:
                 - h89-1
                 - h89-2
+      initContainers:
+        - name: init-drupal
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              mkdir -p /mnt/files/translations
+              chown -R 33:33 /mnt/files
+              chmod -R 775 /mnt/files
+              cp /config/settings.php /mnt/files/settings.php
+              chown 33:33 /mnt/files/settings.php
+              chmod 666 /mnt/files/settings.php
+          volumeMounts:
+            - name: drupal-files
+              mountPath: /mnt/files
+            - name: drupal-settings-config
+              mountPath: /config
       containers:
         - name: drupal
           image: drupal:10-fpm-alpine
+          lifecycle:
+            postStart:
+              exec:
+                command: ["sh", "-c", "ln -sf /opt/drupal/web/sites/default/files/settings.php /opt/drupal/web/sites/default/settings.php && chown -R www-data:www-data /opt/drupal/web/sites/default"]
           ports:
             - containerPort: 80
               name: http
@@ -61,13 +83,10 @@ spec:
               cpu: 500m
               memory: 512Mi
           volumeMounts:
-            - name: drupal-settings
-              mountPath: /opt/drupal/web/sites/default/settings.php
-              subPath: settings.php
             - name: drupal-files
               mountPath: /opt/drupal/web/sites/default/files
       volumes:
-        - name: drupal-settings
+        - name: drupal-settings-config
           configMap:
             name: drupal-settings
         - name: drupal-files
