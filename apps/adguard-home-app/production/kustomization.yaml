@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../base
+
+namespace: adguard-home-app-production
+
+patches:
+  - path: image-patch.yaml
+  - path: storage.yaml
+  - target:
+      kind: Ingress
+      name: adguard-home
+    patch: |-
+      - op: replace
+        path: /metadata/annotations/traefik.ingress.kubernetes.io~1router.middlewares
+        value: adguard-home-app-production-redirect-to-https@kubernetescrd
+

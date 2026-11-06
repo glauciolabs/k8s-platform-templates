@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: adguard-home-app-production
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/glauciolabs/k8s-platform-templates.git
+    targetRevision: master
+    path: apps/adguard-home-app/production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: adguard-home-app-production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+

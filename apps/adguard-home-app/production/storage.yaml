@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adguard-home
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/hostname
+                    operator: In
+                    values:
+                      - gww-1
+                      - gww-2
+      volumes:
+        - name: adguard-work
+          hostPath:
+            path: /data/adguard-home/work
+            type: DirectoryOrCreate
+        - name: adguard-conf
+          hostPath:
+            path: /data/adguard-home/conf
+            type: DirectoryOrCreate
+

@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wireguard-gateway
+  labels:
+    app: wireguard-gateway
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wireguard-gateway
+  template:
+    metadata:
+      labels:
+        app: wireguard-gateway
+    spec:
+      containers:
+        - name: wireguard
+          image: linuxserver/wireguard:latest
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+            privileged: true
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/Sao_Paulo"
+          ports:
+            - name: wireguard-udp
+              containerPort: 51820
+              hostPort: 51820
+              protocol: UDP
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          volumeMounts:
+            - name: config
+              mountPath: /config/wg_confs/wg0.conf
+              subPath: wg0.conf
+            - name: modules
+              mountPath: /lib/modules
+              readOnly: true
+      volumes:
+        - name: config
+          secret:
+            secretName: wireguard-gateway-config
+            defaultMode: 0600
+        - name: modules
+          hostPath:
+            path: /lib/modules
+

@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: adguard-home
+  labels:
+    app: adguard-home
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-cloudflare
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
+    external-dns.kubernetes.io/cloudflare-proxied: "false"
+    traefik.ingress.kubernetes.io/router.middlewares: redirect-to-https@kubernetescrd
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: adguard.glauciolabs.work
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: adguard-home-web
+                port:
+                  number: 3000
+  tls:
+    - hosts:
+        - adguard.glauciolabs.work
+      secretName: adguard-home-tls
+
