@@ -75,7 +75,10 @@ spec:
               mountPath: /opt/adguardhome/conf
       volumes:
         - name: adguard-work
-          emptyDir: {}
+          hostPath:
+            path: /data/adguard-home/work
+            type: DirectoryOrCreate
         - name: adguard-conf
-          emptyDir: {}
-
+          hostPath:
+            path: /data/adguard-home/conf
+            type: DirectoryOrCreate
