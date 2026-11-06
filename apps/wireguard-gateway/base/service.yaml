@@ -9,10 +9,9 @@ spec:
   externalTrafficPolicy: Local
   ports:
     - name: wireguard-udp
-      port: 51820
-      targetPort: 51820
+      port: 41872
+      targetPort: 41872
       nodePort: 31820
       protocol: UDP
   selector:
     app: wireguard-gateway
-

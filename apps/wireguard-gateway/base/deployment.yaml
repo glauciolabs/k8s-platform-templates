@@ -33,10 +33,12 @@ spec:
               value: "1000"
             - name: TZ
               value: "America/Sao_Paulo"
+            - name: SERVERPORT
+              value: "41872"
           ports:
             - name: wireguard-udp
-              containerPort: 51820
-              hostPort: 51820
+              containerPort: 41872
+              hostPort: 41872
               protocol: UDP
           resources:
             requests:
@@ -60,4 +62,3 @@ spec:
         - name: modules
           hostPath:
             path: /lib/modules
-
