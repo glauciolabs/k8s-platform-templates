@@ -9,6 +9,10 @@ metadata:
     external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
     external-dns.kubernetes.io/cloudflare-proxied: "false"
     traefik.ingress.kubernetes.io/router.middlewares: redirect-to-https@kubernetescrd
+    traefik.ingress.kubernetes.io/service.sticky.cookie: "true"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.name: "adguard_session"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.secure: "true"
+    traefik.ingress.kubernetes.io/service.sticky.cookie.samesite: "lax"
 spec:
   ingressClassName: traefik
   rules:
@@ -21,7 +25,7 @@ spec:
               service:
                 name: adguard-home-web
                 port:
-                  number: 3000
+                  number: 80
   tls:
     - hosts:
         - adguard.glauciolabs.work
