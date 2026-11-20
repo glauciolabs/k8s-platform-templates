@@ -302,7 +302,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: bff
-        image: ghcr.io/glauciocampos/finance-bff:latest
+        image: ghcr.io/glauciolabs/finance-bff@sha256:e47de5bc7463c76024f24c7e58cf0ed9a09b48a54e916773898c7be18b70824a
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
