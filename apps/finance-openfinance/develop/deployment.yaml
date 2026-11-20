@@ -41,6 +41,11 @@ spec:
                 secretKeyRef:
                   name: family-finance-secrets
                   key: PLUGGY_WEBHOOK_TOKEN
+            - name: PLUGGY_WEBHOOK_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: PLUGGY_WEBHOOK_TOKEN
             - name: CLOUDFLARE_ACCOUNT_ID
               valueFrom:
                 secretKeyRef:
