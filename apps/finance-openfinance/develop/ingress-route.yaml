@@ -1,0 +1,15 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: webhook
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "Host(`finance.glauciolabs.work`) && Path(`/api/v1/integrations/pluggy/webhook`) && Method(`POST`)"
+      services:
+        - name: finance-openfinance-app
+          port: 80
+  tls:
+    secretName: finance-bff-tls

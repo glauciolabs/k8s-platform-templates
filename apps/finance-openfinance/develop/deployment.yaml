@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  template:
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+        environment: develop
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: app
+          # Replace the placeholder with the published digest before syncing.
+          image: ghcr.io/glauciolabs/finance-openfinance@sha256:replace-me
+          securityContext:
+            runAsUser: 65532
+            runAsGroup: 65532
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+          env:
+            - name: PLUGGY_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: PLUGGY_CLIENT_ID
+            - name: PLUGGY_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: PLUGGY_CLIENT_SECRET
+            - name: PLUGGY_WEBHOOK_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: PLUGGY_WEBHOOK_TOKEN
+            - name: CLOUDFLARE_ACCOUNT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: CLOUDFLARE_ACCOUNT_ID
+            - name: CLOUDFLARE_D1_DATABASE_ID
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: CLOUDFLARE_D1_DATABASE_ID
+            - name: CLOUDFLARE_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: CLOUDFLARE_API_TOKEN
+            - name: INTERNAL_SERVICE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: family-finance-secrets
+                  key: INTERNAL_SERVICE_API_KEY
