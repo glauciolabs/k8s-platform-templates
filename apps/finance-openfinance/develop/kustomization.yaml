@@ -11,3 +11,6 @@ labels:
     includeSelectors: true
 patches:
   - path: deployment.yaml
+images:
+  - name: ghcr.io/glauciolabs/finance-openfinance
+    newTag: 24d2ae5
