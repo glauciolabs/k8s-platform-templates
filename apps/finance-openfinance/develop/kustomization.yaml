@@ -13,5 +13,5 @@ patches:
   - path: deployment.yaml
 images:
   - name: ghcr.io/glauciolabs/finance-openfinance
-    newTag: 00fba4a
-    digest: sha256:1e6a46cbb073d2934fbee97bf4ec733b7add1b4e472b990ea5e5ffda98e0d109
+    newTag: 6de8985
+    digest: sha256:0c7a7a18cc353ef2d8a9eac2ccb7c0d8da2ba45dc0c0839c4b1fc831279b9048
