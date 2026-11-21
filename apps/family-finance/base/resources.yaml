@@ -31,6 +31,11 @@ spec:
             secretKeyRef:
               name: family-finance-secrets
               key: INTERNAL_SERVICE_API_KEY
+        - name: PLUGGY_WEBHOOK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: PLUGGY_WEBHOOK_TOKEN
         - name: CLOUDFLARE_ACCOUNT_ID
           valueFrom:
             secretKeyRef:
@@ -145,6 +150,11 @@ spec:
             secretKeyRef:
               name: family-finance-secrets
               key: INTERNAL_SERVICE_API_KEY
+        - name: PLUGGY_WEBHOOK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: PLUGGY_WEBHOOK_TOKEN
         - name: GEMINI_API_KEY
           valueFrom:
             secretKeyRef:
@@ -250,6 +260,11 @@ spec:
             secretKeyRef:
               name: family-finance-secrets
               key: INTERNAL_SERVICE_API_KEY
+        - name: PLUGGY_WEBHOOK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: PLUGGY_WEBHOOK_TOKEN
         - name: MSAL_CLIENT_ID
           valueFrom:
             secretKeyRef:
@@ -321,7 +336,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: bff
-        image: ghcr.io/glauciolabs/finance-bff:v2-sync-fix
+        image: ghcr.io/glauciolabs/finance-bff:v2-sync-tok
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
@@ -358,6 +373,11 @@ spec:
             secretKeyRef:
               name: family-finance-secrets
               key: INTERNAL_SERVICE_API_KEY
+        - name: PLUGGY_WEBHOOK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: PLUGGY_WEBHOOK_TOKEN
         - name: CLOUDFLARE_ACCOUNT_ID
           valueFrom:
             secretKeyRef:
