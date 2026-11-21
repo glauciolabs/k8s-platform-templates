@@ -336,7 +336,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: bff
-        image: ghcr.io/glauciolabs/finance-bff:v2-sync-120s
+        image: ghcr.io/glauciolabs/finance-bff:v2-async-sync
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
