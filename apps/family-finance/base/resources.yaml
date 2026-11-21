@@ -121,6 +121,8 @@ spec:
           value: "4002"
         - name: CORE_API_URL
           value: "http://finance-core-api:4001"
+        - name: OPENFINANCE_URL
+          value: "http://finance-openfinance-app"
         - name: GEMINI_API_KEY
           valueFrom:
             secretKeyRef:
@@ -326,6 +328,8 @@ spec:
           value: "4000"
         - name: CORE_API_URL
           value: "http://finance-core-api:4001"
+        - name: OPENFINANCE_URL
+          value: "http://finance-openfinance-app"
         - name: GEMINI_API_KEY
           valueFrom:
             secretKeyRef:
@@ -450,6 +454,33 @@ spec:
         backend:
           service:
             name: finance-bff
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - finance.glauciolabs.work
+    secretName: finance-bff-tls
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: finance-openfinance-webhook
+  namespace: family-finance
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: finance.glauciolabs.work
+    http:
+      paths:
+      - path: /webhooks/pluggy
+        pathType: Prefix
+        backend:
+          service:
+            name: finance-openfinance-app
             port:
               number: 80
   tls:
