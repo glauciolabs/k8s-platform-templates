@@ -36,6 +36,26 @@ spec:
             secretKeyRef:
               name: family-finance-secrets
               key: PLUGGY_WEBHOOK_TOKEN
+        - name: MSAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_ID
+        - name: MSAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_SECRET
+        - name: MSAL_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_TENANT_ID
+        - name: MSAL_REDIRECT_URI
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_REDIRECT_URI
         - name: CLOUDFLARE_ACCOUNT_ID
           valueFrom:
             secretKeyRef:
@@ -155,6 +175,26 @@ spec:
             secretKeyRef:
               name: family-finance-secrets
               key: PLUGGY_WEBHOOK_TOKEN
+        - name: MSAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_ID
+        - name: MSAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_SECRET
+        - name: MSAL_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_TENANT_ID
+        - name: MSAL_REDIRECT_URI
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_REDIRECT_URI
         - name: GEMINI_API_KEY
           valueFrom:
             secretKeyRef:
@@ -275,6 +315,26 @@ spec:
             secretKeyRef:
               name: family-finance-secrets
               key: MSAL_CLIENT_SECRET
+        - name: MSAL_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_TENANT_ID
+        - name: MSAL_REDIRECT_URI
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_REDIRECT_URI
+        - name: MSAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_ID
+        - name: MSAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_SECRET
         - name: MSAL_REDIRECT_URI
           valueFrom:
             secretKeyRef:
@@ -336,7 +396,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: bff
-        image: ghcr.io/glauciolabs/finance-bff:v2-js-fix
+        image: ghcr.io/glauciolabs/finance-bff:v2-entra-auth
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
@@ -378,6 +438,26 @@ spec:
             secretKeyRef:
               name: family-finance-secrets
               key: PLUGGY_WEBHOOK_TOKEN
+        - name: MSAL_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_ID
+        - name: MSAL_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_CLIENT_SECRET
+        - name: MSAL_TENANT_ID
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_TENANT_ID
+        - name: MSAL_REDIRECT_URI
+          valueFrom:
+            secretKeyRef:
+              name: family-finance-secrets
+              key: MSAL_REDIRECT_URI
         - name: CLOUDFLARE_ACCOUNT_ID
           valueFrom:
             secretKeyRef:
