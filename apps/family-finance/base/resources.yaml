@@ -123,6 +123,8 @@ spec:
           value: "http://finance-core-api:4001"
         - name: OPENFINANCE_URL
           value: "http://finance-openfinance-app"
+        - name: OPENFINANCE_BASE_URL
+          value: "http://finance-openfinance-app"
         - name: GEMINI_API_KEY
           valueFrom:
             secretKeyRef:
@@ -329,6 +331,8 @@ spec:
         - name: CORE_API_URL
           value: "http://finance-core-api:4001"
         - name: OPENFINANCE_URL
+          value: "http://finance-openfinance-app"
+        - name: OPENFINANCE_BASE_URL
           value: "http://finance-openfinance-app"
         - name: GEMINI_API_KEY
           valueFrom:
