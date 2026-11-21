@@ -480,7 +480,7 @@ spec:
   - host: finance.glauciolabs.work
     http:
       paths:
-      - path: /webhooks/pluggy
+      - path: /api/v1/integrations/pluggy/webhook
         pathType: Prefix
         backend:
           service:
