@@ -396,13 +396,15 @@ spec:
       - name: ghcr-secret
       containers:
       - name: bff
-        image: ghcr.io/glauciolabs/finance-bff:v2-ai-forecast
+        image: ghcr.io/glauciolabs/finance-bff:v2-tz-sp
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
         env:
         - name: PORT
           value: "4000"
+        - name: TZ
+          value: "America/Sao_Paulo"
         - name: CORE_API_URL
           value: "http://finance-core-api:4001"
         - name: OPENFINANCE_URL
