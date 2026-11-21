@@ -19,7 +19,7 @@ spec:
       - name: ghcr-secret
       containers:
       - name: core-api
-        image: ghcr.io/glauciolabs/finance-core-api@sha256:9e257e6047bca76c75e67a37075fffa44db0c1f5545b12381673a79fbab3c078
+        image: ghcr.io/glauciolabs/finance-core-api:v2-bills
         imagePullPolicy: Always
         ports:
         - containerPort: 4001
