@@ -11,7 +11,7 @@ patches:
 
 images:
   - name: ghcr.io/glauciolabs/finance-core-api
-    digest: sha256:9e257e6047bca76c75e67a37075fffa44db0c1f5545b12381673a79fbab3c078
+    newTag: v2-bills-v2
   - name: ghcr.io/glauciocampos/finance-core-api
     newName: ghcr.io/glauciolabs/finance-core-api
-    digest: sha256:9e257e6047bca76c75e67a37075fffa44db0c1f5545b12381673a79fbab3c078
+    newTag: v2-bills-v2
